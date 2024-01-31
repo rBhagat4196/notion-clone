@@ -13,7 +13,7 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { useMutation } from "convex/react";
-
+import UserItem from "./user-item";
 import { cn } from "@/lib/utils";
 import { api } from "@/convex/_generated/api";
 
@@ -129,7 +129,7 @@ export const Navigation = () => {
           
         </div>
         <div className="mt-4">
-          
+          <UserItem/>
         </div>
         <div
           onMouseDown={handleMouseDown}
