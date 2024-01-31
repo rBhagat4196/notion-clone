@@ -2,7 +2,7 @@
 
 import { useConvexAuth } from "convex/react";
 import { redirect } from "next/navigation";
-import Navigation from "./_components/navigation";
+import {Navigation} from "./_components/navigation";
 import { Spinner } from "@/components/spinner";
 
 const MainLayout = ({
