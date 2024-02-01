@@ -12,7 +12,7 @@ import {
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import {UserItem} from "./user-item";
 import { cn } from "@/lib/utils";
 import { api } from "@/convex/_generated/api";
@@ -20,6 +20,7 @@ import { api } from "@/convex/_generated/api";
 export const Navigation = () => {
   const router = useRouter();
 
+  const documents = useQuery(api.documents.get)
   const params = useParams();
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -125,11 +126,15 @@ export const Navigation = () => {
         >
           <ChevronsLeft className="h-6 w-6" />
         </div>
-        <div>
-          
+        <div >
+          <UserItem/>
         </div>
         <div className="mt-4">
-          <UserItem/>
+          {
+            documents?.map((document)=>(
+              <p key={document._id}>{document.title}</p>
+            ))
+          }
         </div>
         <div
           onMouseDown={handleMouseDown}
