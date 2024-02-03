@@ -7,16 +7,16 @@ import {
   PlusCircle,
   Search,
   Settings,
-  Trash
+  Trash,
 } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { useMutation, useQuery } from "convex/react";
-import {UserItem} from "./user-item";
+import { UserItem } from "./user-item";
 import { cn } from "@/lib/utils";
 import { api } from "@/convex/_generated/api";
-import {Item} from "./item";
+import { Item } from "./item";
 import { toast } from "sonner";
 import DocumentList from "./document-list";
 
@@ -27,7 +27,7 @@ export const Navigation = () => {
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  const create = useMutation(api.documents.create)
+  const create = useMutation(api.documents.create);
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
   const navbarRef = useRef<ElementRef<"div">>(null);
@@ -69,7 +69,10 @@ export const Navigation = () => {
     if (sidebarRef.current && navbarRef.current) {
       sidebarRef.current.style.width = `${newWidth}px`;
       navbarRef.current.style.setProperty("left", `${newWidth}px`);
-      navbarRef.current.style.setProperty("width", `calc(100% - ${newWidth}px)`);
+      navbarRef.current.style.setProperty(
+        "width",
+        `calc(100% - ${newWidth}px)`
+      );
     }
   };
 
@@ -89,10 +92,7 @@ export const Navigation = () => {
         "width",
         isMobile ? "0" : "calc(100% - 240px)"
       );
-      navbarRef.current.style.setProperty(
-        "left",
-        isMobile ? "100%" : "240px"
-      );
+      navbarRef.current.style.setProperty("left", isMobile ? "100%" : "240px");
       setTimeout(() => setIsResetting(false), 300);
     }
   };
@@ -107,16 +107,16 @@ export const Navigation = () => {
       navbarRef.current.style.setProperty("left", "0");
       setTimeout(() => setIsResetting(false), 300);
     }
-  }
+  };
 
-  const handleCreate =()=>{
-    const promise = create({title : "Untitled"});
-    toast.promise(promise,{
-      loading : "Creating a new note...",
-      success : "New note created",
-      error : "Failed to create a new note"
-    })
-  }
+  const handleCreate = () => {
+    const promise = create({ title: "Untitled" });
+    toast.promise(promise, {
+      loading: "Creating a new note...",
+      success: "New note created",
+      error: "Failed to create a new note",
+    });
+  };
   return (
     <>
       <aside
@@ -137,26 +137,19 @@ export const Navigation = () => {
         >
           <ChevronsLeft className="h-6 w-6" />
         </div>
-        <div >
-          <UserItem/>
-          <Item 
-          label = "Search" 
-          icon={Search}
-          isSearch
-          onClick={()=>{}}
-          />
-          <Item 
-          label = "Setting" 
-          icon={Settings}
-          onClick={()=>{}}
-          />
-          <Item 
-          onClick={handleCreate} 
-          label = "New Page" 
-          icon={PlusCircle}/>
+        <div>
+          <UserItem />
+          <Item label="Search" icon={Search} isSearch onClick={() => {}} />
+          <Item label="Setting" icon={Settings} onClick={() => {}} />
+          <Item onClick={handleCreate} label="New Page" icon={PlusCircle} />
         </div>
         <div className="mt-4">
-          <DocumentList/>
+          <DocumentList />
+          <Item
+          onClick={handleCreate}
+          icon={Plus}
+          label="Add a Page"
+          />
         </div>
         <div
           onMouseDown={handleMouseDown}
@@ -172,12 +165,16 @@ export const Navigation = () => {
           isMobile && "left-0 w-full"
         )}
       >
-        
-          <nav className="bg-transparent px-3 py-2 w-full">
-            {isCollapsed && <MenuIcon onClick={resetWidth} role="button" className="h-6 w-6 text-muted-foreground" />}
-          </nav>
+        <nav className="bg-transparent px-3 py-2 w-full">
+          {isCollapsed && (
+            <MenuIcon
+              onClick={resetWidth}
+              role="button"
+              className="h-6 w-6 text-muted-foreground"
+            />
+          )}
+        </nav>
       </div>
     </>
-  )
-}
-
+  );
+};
